@@ -1,45 +1,50 @@
-// Ask the user for the first number.
-// Ask the user for the second number.
-// Ask the user for an operation to perform.
-// Perform the operation on the two numbers.
-// Print the result to the terminal.
+const LANGUAGE = 'en';
+const MESSAGES = require('./calculator_messages.json');
 
-const readLine = require('readline-sync');
+function messages(message, lang='en') {
+    return MESSAGES[lang][message];
+  }
 
-function prompt(message) {
-    console.log(`=> ${message}`)
+function prompt(key) {
+    let message = messages(key, LANGUAGE);
+    console.log(`=> ${message}`);
 }
 
-prompt('Welcome to Calculator!');
-prompt("What's the first number?");
-let number1 = readLine.question();
+const readLine = require('readline-sync');
 
 function invalidNumber(number) {
     return number.trimStart() === '' || Number.isNaN(Number(number));
 }
 
+prompt('welcome');
+
+while (true) {
+
+    prompt('firstNumber');
+let number1 = readLine.question();
+
 while (invalidNumber(number1)) {
-    prompt("Hmm... that doesn't look like a valid number.");
+    prompt('invalidInput');
     number1 = readLine.question();
 }
 
-prompt("What's the second number?");
+prompt('secondNumber');
 let number2 = readLine.question();
 
 while (invalidNumber(number2)) {
-    prompt("Hmm... that doesn't look like a valid number.");
+    prompt('invalidInput');
     number2 = readLine.question();
 }
 
-prompt('What operation would you like to perform?\n1) Add 2) Subtract 3) Multply 4) Divide');
+prompt('operation');
 let operation = readLine.question();
 
 while (!['1', '2', '3', '4'].includes(operation)) {
-    prompt('Must choose 1, 2, 3 or 4');
+    prompt('invalidOperation');
     operation = readLine.question();
 }
 
-prompt(`${number1} ${number2}`);
+console.log(`=> ${number1} ${number2}`);
 
 let output;
 switch (operation) {
@@ -57,4 +62,15 @@ switch (operation) {
         break;
 }
 
-prompt(`The result is: ${output}`);
+prompt('result') + console.log(output);
+
+
+
+prompt('anotherOperation');
+let userAnswer = readLine.question();
+
+if (userAnswer.toLowerCase() !== 'y') break;
+
+};
+
+
